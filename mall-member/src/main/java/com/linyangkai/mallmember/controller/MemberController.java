@@ -1,5 +1,6 @@
 package com.linyangkai.mallmember.controller;
 
+import com.linyangkai.mallmember.feign.CouponFeignService;
 import java.util.Arrays;
 import java.util.Map;
 
@@ -31,6 +32,8 @@ public class MemberController {
     @Autowired
     private MemberService memberService;
 
+    @Autowired
+    CouponFeignService couponFeignService;
     /**
      * 列表
      */
@@ -40,6 +43,11 @@ public class MemberController {
         PageUtils page = memberService.queryPage(params);
 
         return R.ok().put("page", page);
+    }
+
+    @RequestMapping("/coupons")
+    public R test(){
+        return R.ok().put("coupons",couponFeignService.memberCoupon());
     }
 
 
