@@ -13,6 +13,12 @@ spring:
         file-extension: yml
     gateway:
       routes:
+        - id: product-route
+          uri: lb://mall-product
+          predicates:
+            - Path=/api/mallproduct/**
+          filters:
+            - RewritePath=/api/(?<segment>/?.*), /$\{segment}
         - id: admin-route
           uri: lb://renren-fast
           predicates:
