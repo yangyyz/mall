@@ -1,0 +1,22 @@
+server:
+  port: 88
+
+spring:
+  application:
+    name: mall-gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+      config:
+        server-addr: localhost:8848
+        file-extension: yml
+    gateway:
+      routes:
+        - id: test-route
+          uri: http://baidu.com
+          predicates:
+            - Query=url,baidu
+  config:
+    import:
+      - optional:nacos:${spring.application.name}.${spring.cloud.nacos.config.file-extension}
