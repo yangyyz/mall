@@ -1,15 +1,17 @@
 package com.linyangkai.mallproduct.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import lombok.Data;
 
 /**
  * 商品三级分类
- * 
+ *
  * @author linyangkai
  * @email 819450837@qq.com
  * @date 2023-04-23 15:38:05
@@ -57,4 +59,10 @@ public class CategoryEntity implements Serializable {
 	 */
 	private Integer productCount;
 
+	/**
+	 * 子分类（在数据表中不存在）
+	 */
+	@TableField(exist = false)
+	private List<CategoryEntity> children;
 }
+

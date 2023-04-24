@@ -13,10 +13,12 @@ spring:
         file-extension: yml
     gateway:
       routes:
-        - id: test-route
-          uri: http://baidu.com
+        - id: admin-route
+          uri: lb://renren-fast
           predicates:
-            - Query=url,baidu
+            - Path=/api/**
+          filters:
+            - RewritePath=/api/(?<segment>/?.*), /renren-fast/$\{segment}
   config:
     import:
       - optional:nacos:${spring.application.name}.${spring.cloud.nacos.config.file-extension}
