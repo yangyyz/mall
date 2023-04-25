@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import javax.validation.Valid;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -66,9 +67,8 @@ public class CategoryController {
    */
   @RequestMapping("/save")
   @RequiresPermissions("mallproduct:category:save")
-  public R save(@RequestBody CategoryEntity category) {
+  public R save(@Valid @RequestBody CategoryEntity category) {
     categoryService.save(category);
-
     return R.ok();
   }
 
@@ -90,7 +90,6 @@ public class CategoryController {
   @RequiresPermissions("mallproduct:category:delete")
   public R delete(@RequestBody Long[] catIds) {
     categoryService.removeByIds(Arrays.asList(catIds));
-
     return R.ok();
   }
 
