@@ -17,7 +17,6 @@ import com.linyangkai.common.utils.PageUtils;
 import com.linyangkai.common.utils.R;
 
 
-
 /**
  * 品牌
  *
@@ -28,63 +27,61 @@ import com.linyangkai.common.utils.R;
 @RestController
 @RequestMapping("mallproduct/brand")
 public class BrandController {
-    @Autowired
-    private BrandService brandService;
 
-    /**
-     * 列表
-     */
-    @RequestMapping("/list")
-    @RequiresPermissions("mallproduct:brand:list")
-    public R list(@RequestParam Map<String, Object> params){
-        PageUtils page = brandService.queryPage(params);
+  @Autowired
+  private BrandService brandService;
 
-        return R.ok().put("page", page);
-    }
+  /**
+   * 列表
+   */
+  @RequestMapping("/list")
+  @RequiresPermissions("mallproduct:brand:list")
+  public R list(@RequestParam Map<String, Object> params) {
+    PageUtils page = brandService.queryPage(params);
+    return R.ok().put("page", page);
+  }
 
 
-    /**
-     * 信息
-     */
-    @RequestMapping("/info/{brandId}")
-    @RequiresPermissions("mallproduct:brand:info")
-    public R info(@PathVariable("brandId") Long brandId){
-		BrandEntity brand = brandService.getById(brandId);
+  /**
+   * 信息
+   */
+  @RequestMapping("/info/{brandId}")
+  @RequiresPermissions("mallproduct:brand:info")
+  public R info(@PathVariable("brandId") Long brandId) {
+    BrandEntity brand = brandService.getById(brandId);
 
-        return R.ok().put("brand", brand);
-    }
+    return R.ok().put("brand", brand);
+  }
 
-    /**
-     * 保存
-     */
-    @RequestMapping("/save")
-    @RequiresPermissions("mallproduct:brand:save")
-    public R save(@RequestBody BrandEntity brand){
-		brandService.save(brand);
+  /**
+   * 保存
+   */
+  @RequestMapping("/save")
+  @RequiresPermissions("mallproduct:brand:save")
+  public R save(@RequestBody BrandEntity brand) {
+    brandService.save(brand);
+    return R.ok();
+  }
 
-        return R.ok();
-    }
+  /**
+   * 修改
+   */
+  @RequestMapping("/update")
+  @RequiresPermissions("mallproduct:brand:update")
+  public R update(@RequestBody BrandEntity brand) {
+    brandService.updateById(brand);
+    return R.ok();
+  }
 
-    /**
-     * 修改
-     */
-    @RequestMapping("/update")
-    @RequiresPermissions("mallproduct:brand:update")
-    public R update(@RequestBody BrandEntity brand){
-		brandService.updateById(brand);
+  /**
+   * 删除
+   */
+  @RequestMapping("/delete")
+  @RequiresPermissions("mallproduct:brand:delete")
+  public R delete(@RequestBody Long[] brandIds) {
+    brandService.removeByIds(Arrays.asList(brandIds));
 
-        return R.ok();
-    }
-
-    /**
-     * 删除
-     */
-    @RequestMapping("/delete")
-    @RequiresPermissions("mallproduct:brand:delete")
-    public R delete(@RequestBody Long[] brandIds){
-		brandService.removeByIds(Arrays.asList(brandIds));
-
-        return R.ok();
-    }
+    return R.ok();
+  }
 
 }
