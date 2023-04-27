@@ -1,5 +1,6 @@
 package com.linyangkai.mallproduct.controller;
 
+import com.linyangkai.mallproduct.vo.AttrVo;
 import java.util.Arrays;
 import java.util.Map;
 
@@ -17,7 +18,6 @@ import com.linyangkai.common.utils.PageUtils;
 import com.linyangkai.common.utils.R;
 
 
-
 /**
  * 商品属性
  *
@@ -28,62 +28,70 @@ import com.linyangkai.common.utils.R;
 @RestController
 @RequestMapping("mallproduct/attr")
 public class AttrController {
-    @Autowired
-    private AttrService attrService;
 
-    /**
-     * 列表
-     */
-    @RequestMapping("/list")
-    @RequiresPermissions("mallproduct:attr:list")
-    public R list(@RequestParam Map<String, Object> params){
-        PageUtils page = attrService.queryPage(params);
+  @Autowired
+  private AttrService attrService;
 
-        return R.ok().put("page", page);
-    }
+  @RequestMapping("/list")
+  @RequiresPermissions("mallproduct:attr:list")
+  public R baseAttrList(@RequestParam Map<String, Object> params) {
+    PageUtils page = attrService.queryPage(params);
 
-    /**
-     * 信息
-     */
-    @RequestMapping("/info/{attrId}")
-    @RequiresPermissions("mallproduct:attr:info")
-    public R info(@PathVariable("attrId") Long attrId){
-		AttrEntity attr = attrService.getById(attrId);
+    return R.ok().put("page", page);
+  }
 
-        return R.ok().put("attr", attr);
-    }
+  /**
+   * 列表
+   */
+  @RequestMapping("/base/list/{catelogId}")
+  @RequiresPermissions("mallproduct:attr:list")
+  public R list(@RequestParam Map<String, Object> params,
+      @PathVariable("catelogId") Long catelogId) {
+    PageUtils page = attrService.queryBaseAttrPage(params,catelogId);
+    return R.ok().put("page", page);
+  }
 
-    /**
-     * 保存
-     */
-    @RequestMapping("/save")
-    @RequiresPermissions("mallproduct:attr:save")
-    public R save(@RequestBody AttrEntity attr){
-		attrService.save(attr);
+  /**
+   * 信息
+   */
+  @RequestMapping("/info/{attrId}")
+  @RequiresPermissions("mallproduct:attr:info")
+  public R info(@PathVariable("attrId") Long attrId) {
+    AttrEntity attr = attrService.getById(attrId);
 
-        return R.ok();
-    }
+    return R.ok().put("attr", attr);
+  }
 
-    /**
-     * 修改
-     */
-    @RequestMapping("/update")
-    @RequiresPermissions("mallproduct:attr:update")
-    public R update(@RequestBody AttrEntity attr){
-		attrService.updateById(attr);
+  /**
+   * 保存
+   */
+  @RequestMapping("/save")
+  @RequiresPermissions("mallproduct:attr:save")
+  public R save(@RequestBody AttrVo attr) {
+    attrService.saveAttr(attr);
+    return R.ok();
+  }
 
-        return R.ok();
-    }
+  /**
+   * 修改
+   */
+  @RequestMapping("/update")
+  @RequiresPermissions("mallproduct:attr:update")
+  public R update(@RequestBody AttrEntity attr) {
+    attrService.updateById(attr);
 
-    /**
-     * 删除
-     */
-    @RequestMapping("/delete")
-    @RequiresPermissions("mallproduct:attr:delete")
-    public R delete(@RequestBody Long[] attrIds){
-		attrService.removeByIds(Arrays.asList(attrIds));
+    return R.ok();
+  }
 
-        return R.ok();
-    }
+  /**
+   * 删除
+   */
+  @RequestMapping("/delete")
+  @RequiresPermissions("mallproduct:attr:delete")
+  public R delete(@RequestBody Long[] attrIds) {
+    attrService.removeByIds(Arrays.asList(attrIds));
+
+    return R.ok();
+  }
 
 }

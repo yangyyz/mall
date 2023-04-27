@@ -37,7 +37,7 @@ public class CategoryBrandRelationController {
   @RequiresPermissions("mallproduct:categorybrandrelation:list")
   public R list(@RequestParam("brandId") Long brandId) {
     List<CategoryBrandRelationEntity> data = categoryBrandRelationService.list(
-        new QueryWrapper<CategoryBrandRelationEntity>().eq("brandId", brandId));
+        new QueryWrapper<CategoryBrandRelationEntity>().eq("brand_id", brandId));
     return R.ok().put("data", data);
   }
 
